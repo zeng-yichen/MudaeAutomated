@@ -4,9 +4,11 @@ USER_TOKEN
 a unique token corresponding to your unique Discord account
 This is needed in order to link the automation script to your account
 Instructions for obtaining this token can be found here: https://discordpy-self.readthedocs.io/en/latest/authenticating.html
+
+PLEASE WRAP THE TOKEN WITH QUOTES! The USER_TOKEN must be a Python string.
 """
 
-USER_TOKEN = 0
+USER_TOKEN = ""
 
 """
 EMOJI
