@@ -1,7 +1,7 @@
 # MudaeAutomated
 **WORKING IN 2025**
 
-Automates Mudae rolls, character claims, kakera claims, and other tasks for your Discord account so that you don't have to (＾▽＾)\
+Autos your Mudae rolls, character claims, kakera claims, and other tasks for your Discord account so that you don't have to (＾▽＾)\
 Please remember that self-botting violates Discord's Terms of Service, so automate at your own discretion.
 
 **AUTOMATED TASKS INCLUDE**:
