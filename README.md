@@ -26,6 +26,7 @@ Please remember that self-botting violates Discord's Terms of Service, so automa
 In addition, the script assumes:
 + $settimer set to 45 seconds
 + $togglesnipe and $togglekakera set to 0
+
 The script will NOT crash or error if these values are different than what they are assumed to be; the script will simply fail to claim/snipe characters protected by these settings.
 
 Please contact me through GitHub or at yzeng@berkeley.edu with comments, questions, or suggestions for improvements.
