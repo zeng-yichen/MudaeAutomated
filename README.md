@@ -1,7 +1,7 @@
 # MudaeAutomated
 **WORKING IN 2025**
 
-Autos your Mudae rolls, character claims, kakera claims, and other tasks for your Discord account so that you don't have to (＾▽＾)\
+Autos your Mudae rolls, character claims, kakera claims, and other tasks for your Discord account so that you don't have to.\
 Please remember that self-botting violates Discord's Terms of Service, so automate at your own discretion.
 
 **AUTOMATED TASKS INCLUDE**:
@@ -48,5 +48,3 @@ Finally, **in the MudaeAutomated directory**, run the following command.
 python main.py
 ```
 This command starts the automation script. **Please monitor stdout (the terminal) for the latest updates regarding the script's activities**.
-
-**Enjoy** (＾▽＾)
