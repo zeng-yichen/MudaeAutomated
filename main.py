@@ -48,13 +48,17 @@ class automation(discord.Client):
         if msg.embeds and (d := msg.embeds[0].to_dict()) and 'image' in d and 'author' in d and not d.get('footer', {}).get('text'):
             match SNIPE_TYPE:
                 case 0:
-                    b = (str(self.user.id) in msg.content and "Wished" in msg.content)
+                    b = (str(self.user.id) in msg.content and "Wished" in msg.content) # or msg.embeds[0].to_dict()['author']['name'] in WISHED
                 case 1:
-                    b = "Wished" in msg.content
+                    b = "Wished" in msg.content # or msg.embeds[0].to_dict()['author']['name'] in WISHED
                 case _:
                     raise ValueError(f"INVALID SNIPE_TYPE: {SNIPE_TYPE}")
             if b or int(re.search(r"\*\*(\d+)\*\*<:kakera:", msg.embeds[0].to_dict().get("description", "")).group(1)) > MIN_KAKERA:
-                await msg.add_reaction(EMOJI)
+                # handle wish clicks
+                if message.components and message.components[0].children:
+                    await message.components[0].children[0].click()
+                else:
+                    await msg.add_reaction(EMOJI)
                 print('------')
                 print(f"[{timestamp}] CLAIM ATTEMPTED ON: {msg.embeds[0].to_dict()['author']['name']}")
                 print('------')  
@@ -90,11 +94,10 @@ class automation(discord.Client):
                 r'Upvote Mudae to reset the timer: \*\*\$vote\*\*\. Twitter: \*\*@Mudaebot\*\*\n'
             ).match(msg.content):
             # last hour claim
-            if hasattr(self, 'next_claim') and (self.next_claim - time.time()) % (3 * 3600) < 3600:
+            if MIN_KAKERA_LAST_HOUR > 0 and hasattr(self, 'next_claim') and (self.next_claim - time.time()) % (3 * 3600) < 3600:
                 # check all character cards from last 42.5 seconds for kakera > MIN_KAKERA_LAST_HOUR
                 async for message in msg.channel.history(after=(datetime.now() - timedelta(seconds=42.5))):
                     if message.author.id == MUDAE and message.embeds and (d := message.embeds[0].to_dict()) and 'image' in d and 'author' in d and not d.get('footer', {}).get('text'):
-                        print("lol")
                         match SNIPE_TYPE:
                             case 0:
                                 b = (str(self.user.id) in msg.content and "Wished" in msg.content)
@@ -107,6 +110,7 @@ class automation(discord.Client):
                             print('------')
                             print(f"[{timestamp}] LAST HOUR CLAIM ATTEMPTED ON: {message.embeds[0].to_dict()['author']['name']}")
                             print('------')  
+                            break
                         else:
                             print(f"[{timestamp}] NO LAST HOUR CLAIM ATTEMPTED")
             # roll wait
@@ -139,7 +143,7 @@ class automation(discord.Client):
             self.loop.create_task(self.delay(20 * 3600, 'daily'))
 
     async def delay(self, delay, type):
-        # print("stuck in delay")
+        print("stuck in delay")
         self.delays[type] = time.time() + delay
         match type:
             case 'roll':
@@ -162,7 +166,7 @@ class automation(discord.Client):
         roll_cmd = "$wa"
         while not self.is_closed():
             await self.wait_until_ready()
-            # print("stuck in roll")
+            print("stuck in roll")
             await self.pause_roll.wait()
             await asyncio.sleep(2.5)
             await asyncio.gather(*(channel.send(roll_cmd) for channel in self.mudae_channels))
@@ -170,7 +174,7 @@ class automation(discord.Client):
     async def dailykakera(self):
         while not self.is_closed():
             await self.wait_until_ready()
-            # print("stuck in dailykakera")
+            print("stuck in dailykakera")
             await self.pause_dailykakera.wait()
             await asyncio.sleep(5)
             await asyncio.gather(*(channel.send("$donkeykong") for channel in self.mudae_channels))
@@ -185,7 +189,7 @@ class automation(discord.Client):
     async def listen_to_mudae(self):
         await self.wait_until_ready()
         while not self.is_closed():
-            # print("stuck in listening")
+            print("stuck in listening")
             try:
                 await self.parse_mudae(await self.wait_for('message',timeout=10.0,
                                                      check=(lambda m: m.author.id == MUDAE and 
@@ -200,7 +204,7 @@ class automation(discord.Client):
     async def listen(self):
         await self.wait_until_ready()
         while not self.is_closed():
-            # print("stuck in listening")
+            print("stuck in listening")
             try:
                 await self.parse(await self.wait_for('message',timeout=10.0,
                                                      check=(lambda m: m.author.id in VALID_USERS and 
@@ -267,4 +271,4 @@ class automation(discord.Client):
         # self.tasks, self.delays, self.next_claim
         self.tasks = {}; self.delays = {}
         
-automation(chunk_guilds_at_startup=False).run(USER_TOKEN)
+automation(chunk_guilds_at_startup=False).run(str(USER_TOKEN))
