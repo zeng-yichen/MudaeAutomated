@@ -7,7 +7,6 @@ Please remember that self-botting violates Discord's Terms of Service, so automa
 **FEATURES INCLUDE**:
 + rolling to completion every hour
 + claiming any characters with kakera above a prespecified minimum value
-+ claiming any characters with kakera above an (optionally) *different* prespecified minimum value in the last hour before claims refresh
 + claiming highest kakera character rolled in the last 45 seconds after rolling to completion **in the last hour before claims reset** (this can be disabled in the config.py file)
 + claiming any kakera spawned from rolls or $mk
 + collecting $dailykakera
