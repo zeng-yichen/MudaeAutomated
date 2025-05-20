@@ -18,8 +18,10 @@ Please remember that self-botting violates Discord's Terms of Service, so automa
 
 **NOTES ON SCRIPT BEHAVIOR AND ASSUMPTIONS**:
 + assumes $settimer set to 45 seconds
-+ assumes $togglesnipe and $togglekakera set to 0\
++ assumes $togglesnipe and $togglekakera set to 0
+
 The script will NOT crash or error if these values are different than what they are assumed to be; the script will simply fail to claim/snipe characters protected by these settings.
+
 + does not assume that automated user account has 5 characters in $likelist (the script **will not** modify the automated user account's $likelist or $wishlist in any way)
 + **NOTE**: Currently, the script only supports automation in ONE (1) channel, but support will expand to multiple channels very very soon
 
