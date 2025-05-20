@@ -11,7 +11,6 @@ Please remember that self-botting violates Discord's Terms of Service, so automa
 + claiming any kakera spawned from rolls or $mk
 + collecting $dailykakera
 + collecting $daily roll refreshes
-
 + user monitoring of the internal states of the script through sending simple messages (like "@{replace with your username} list delays") in prespecified Discord channels
 + handling disconnects and reconnects efficiently and reliably
 
