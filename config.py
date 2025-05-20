@@ -4,11 +4,9 @@ USER_TOKEN
 a unique token corresponding to your unique Discord account
 This is needed in order to link the automation script to your account
 Instructions for obtaining this token can be found here: https://discordpy-self.readthedocs.io/en/latest/authenticating.html
-
-PLEASE WRAP THE TOKEN WITH QUOTES! The USER_TOKEN must be a Python string.
 """
 
-USER_TOKEN = ""
+USER_TOKEN = 0 # please change to your user token
 
 """
 EMOJI
@@ -62,8 +60,11 @@ MIN_KAKERA = 500
 """
 MIN_KAKERA_LAST_HOUR
 
-the minimum kakera that a character must possess in order to be claimed IN THE LAST HOUR, IMMEDIATELY AFTER YOUR ROLLS IN THE LAST HOUR
+the minimum kakera that a character must possess in order to be claimed IMMEDIATELY AFTER YOUR ACCOUNT ROLLS TO COMPLETION IN THE LAST HOUR
 It is suggested that MIN_KAKERA be larger than MIN_KAKERA_LAST_HOUR
+
+SET MIN_KAKERA_LAST_HOUR TO 0 TO DISABLE THIS FEATURE
+WARNING: IF MIN_KAKERA_LAST_HOUR IS 0, THE BOT MAY NOT CONSUME THEIR CLIAMS PRIOR TO CLAIM REFRESHES
 """
 
 MIN_KAKERA_LAST_HOUR = 25
