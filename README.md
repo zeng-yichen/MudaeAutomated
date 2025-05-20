@@ -15,7 +15,7 @@ Please remember that self-botting violates Discord's Terms of Service, so automa
 + handling disconnects and reconnects efficiently and reliably
 
 **NOTES ON SCRIPT BEHAVIOR AND ASSUMPTIONS**:
-+ will always attempt to claim characters and kakera that fulfill claim criteria **even if character/kakera claims are not available**
++ will always attempt to claim characters and kakera that fulfill claim criteria **even if character/kakera claims are not available** (I opted not to implement internal timers for claims to prevent false negative cases)
 + assumes $settimer set to 45 seconds
 + assumes $togglesnipe and $togglekakera set to 0
 
