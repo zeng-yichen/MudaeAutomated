@@ -4,17 +4,24 @@
 Autos your Mudae rolls, character claims, kakera claims, and other tasks for your Discord account so that you don't have to.
 Please remember that self-botting violates Discord's Terms of Service, so automate at your own discretion.
 
-**AUTOMATED TASKS INCLUDE**:
+**FEATURES INCLUDE**:
 + rolling to completion every hour
 + claiming any characters with kakera above a prespecified minimum value
 + claiming any characters with kakera above an (optionally) *different* prespecified minimum value in the last hour before claims refresh
++ claiming highest kakera character rolled in the last 45 seconds after rolling to completion **in the last hour before claims reset** (this can be disabled in the config.py file)
 + claiming any kakera spawned from rolls or $mk
 + collecting $dailykakera
 + collecting $daily roll refreshes
 
-**OTHER FEATURES INCLUDE**:
 + user monitoring of the internal states of the script through sending simple messages (like "@{replace with your username} list delays") in prespecified Discord channels
 + handling disconnects and reconnects efficiently and reliably
+
+**NOTES ON SCRIPT BEHAVIOR AND ASSUMPTIONS**:
++ assumes $settimer set to 45 seconds
++ assumes $togglesnipe and $togglekakera set to 0\
+The script will NOT crash or error if these values are different than what they are assumed to be; the script will simply fail to claim/snipe characters protected by these settings.
++ does not assume that automated user account has 5 characters in $likelist (the script **will not** modify the automated user account's $likelist or $wishlist in any way)
++ **NOTE**: Currently, the script only supports automation in ONE (1) channel, but support will expand to multiple channels very very soon
 
 **FEATURES IN DEVELOPMENT INCLUDE**:
 + SLASH COMMANDS
@@ -22,12 +29,8 @@ Please remember that self-botting violates Discord's Terms of Service, so automa
 + further testing for corner cases
 + more ways to monitor script's internal states
 
-**NOTE**: Currently, the script only supports automation in ONE (1) channel, but support will expand to multiple channels very very soon.\
-In addition, the script assumes:
-+ $settimer set to 45 seconds
-+ $togglesnipe and $togglekakera set to 0
-
-The script will NOT crash or error if these values are different than what they are assumed to be; the script will simply fail to claim/snipe characters protected by these settings.
+**KNOWN ERRORS**:
++ tasks duplicate in rare cases upon reconnecting
 
 Please contact me through GitHub or at yzeng@berkeley.edu with comments, questions, or suggestions for improvements.
 
