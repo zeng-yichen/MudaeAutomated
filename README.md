@@ -9,7 +9,7 @@ Please remember that self-botting violates Discord's Terms of Service, so automa
 + claiming any characters with kakera above a prespecified minimum value
 + claiming highest kakera character rolled in the last 45 seconds after rolling to completion **in the last hour before claims reset** (this can be disabled in the config.py file)
 + claiming any kakera spawned from rolls or $mk
-+ collecting $dailykakera
++ collecting $dailykakera (to completion if you have premium)
 + collecting $daily roll refreshes
 + user monitoring of the internal states of the script through sending simple messages (like "@{replace with your username} list delays") in prespecified Discord channels
 + handling disconnects and reconnects efficiently and reliably
