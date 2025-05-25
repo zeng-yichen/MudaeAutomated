@@ -38,13 +38,13 @@ Please contact me through GitHub or at yzeng@berkeley.edu with comments, questio
 Please clone this GitHub repository to your local machine. Instructions for cloning repositories can be found [**HERE**](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
 
 Please install **python 3.11+** if not already installed. Python installation instructions can be found [**HERE**](https://www.python.org/downloads/).\
-Once an appropriate python version is installed, run the following command on your local machine **in the MudaeAutomated directory that you cloned**.
+Once an appropriate python version is installed, run the following command on your local machine.
 ```
-pip install -r requirements.txt
+pip install git+https://github.com/dolfies/discord.py-self.git
 ```
-This command installs all the necessary Python libraries for MudaeAutomated.
+This command installs the discord py-self library necessary for MudaeAutomated.
 
-Next, open the **config.py** file in the MudaeAutomated directory to edit. Fill in values for all of the variables there according to the instructions provided. **Please read the instructions carefully**.
+Next, open the **config.py** file in the MudaeAutomated directory to edit. Define all of the variables there according to the instructions provided. **Please read the instructions carefully**.
 
 Finally, **in the MudaeAutomated directory**, run the following command.
 ```
