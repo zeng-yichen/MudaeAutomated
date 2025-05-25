@@ -11,10 +11,18 @@ USER_TOKEN = 0 # please change to your user token
 """
 EMOJI
 
-the emoji with which the script will use to claim characters
+the emoji with which the script will claim characters
 """
 
 EMOJI = "❤️"
+
+"""
+COMMAND
+
+the command with which the script will roll
+"""
+
+COMMAND = 'wa' # "wa", "ha", etc.
 
 """
 MUDAE_CHANNELS

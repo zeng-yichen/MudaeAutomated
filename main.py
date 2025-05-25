@@ -5,6 +5,7 @@ import time
 from datetime import datetime, timedelta
 from config import (
     EMOJI,
+    COMMAND,
     VALID_USERS,
     MIN_KAKERA,
     MIN_KAKERA_LAST_HOUR,
@@ -13,13 +14,14 @@ from config import (
     MUDAE_CHANNELS,
     ALL_CHANNELS
 )
+from discum.utils.slash import SlashCommander
 
 # this is mudae's ID. do not change
 MUDAE = 432610292342587392
 
 class automation(discord.Client):
 
-    async def parse(self, msg):
+    async def parse(self, msg: discord.Message):
         timestamp = time.strftime("%d %B %Y %H:%M:%S", time.localtime()) + f".{int(time.time() % 1 * 1000):03d}"
         print(f"[{timestamp}] PARSING: " + msg.content)
         if msg.content.startswith(f"<@{self.user.id}>") and "LIST DELAY" in msg.content.upper():
@@ -40,8 +42,14 @@ class automation(discord.Client):
             )
         if msg.content.startswith(f"<@{self.user.id}>") and "RUAN MEI" in msg.content.upper():
             await msg.channel.send("Yes honey?")
+        if msg.content.startswith(f"<@{self.user.id}>") and "LIGMA" in msg.content.upper():
+            command: discord.SlashCommand = next((cmd for cmd in await msg.channel.application_commands() if cmd.name == 'wa'), None)
+            await command.__call__(channel=msg.channel)
+            await msg.channel.send("AWAAA")
+        if msg.content.startswith(f"<@{self.user.id}>") and "MAKE KAK" in msg.content.upper():
+            await msg.channel.send("$mk")
 
-    async def parse_mudae(self, msg):
+    async def parse_mudae(self, msg: discord.Message):
         timestamp = time.strftime("%d %B %Y %H:%M:%S", time.localtime()) + f".{int(time.time() % 1 * 1000):03d}"
         print(f"[{timestamp}] PARSING FROM MUDAE: " + (msg.content if msg.content else "PARSING MUDAE CARD"))
         # character card
@@ -53,17 +61,17 @@ class automation(discord.Client):
                     b = "Wished" in msg.content # or msg.embeds[0].to_dict()['author']['name'] in WISHED
                 case _:
                     raise ValueError(f"INVALID SNIPE_TYPE: {SNIPE_TYPE}")
-            if b or int(re.search(r"\*\*(\d+)\*\*<:kakera:", msg.embeds[0].to_dict().get("description", "")).group(1)) > MIN_KAKERA:
+            kakera = int(re.search(r"\*\*(\d+)\*\*<:kakera:", msg.embeds[0].to_dict().get("description", "")).group(1))
+            if b or kakera > MIN_KAKERA:
                 # handle wish clicks
-                if message.components and message.components[0].children:
-                    await message.components[0].children[0].click()
-                else:
-                    await msg.add_reaction(EMOJI)
+                await msg.add_reaction(EMOJI)
+                if msg.components and msg.components[0].children:
+                    await msg.components[0].children[0].click()
                 print('------')
-                print(f"[{timestamp}] CLAIM ATTEMPTED ON: {msg.embeds[0].to_dict()['author']['name']}")
+                print(f"[{timestamp}] CLAIM ATTEMPTED ON: {msg.embeds[0].to_dict()['author']['name']} ({kakera})")
                 print('------')  
             else:
-                print(f"[{timestamp}] SKIPPED {msg.embeds[0].to_dict()['author']['name']}")
+                print(f"[{timestamp}] SKIPPED {msg.embeds[0].to_dict()['author']['name']} ({kakera})")
         # claim successful
         if match := re.match(
             r'💖 \*\*' + re.escape(self.user.name) + 
@@ -87,12 +95,12 @@ class automation(discord.Client):
         # snipe restriction
         # kakera
         if msg.components and "kakera" in msg.components[0].children[0].emoji.name:
+            print("kak detected")
             await msg.components[0].children[0].click()
         # roll wait / last hour claim
-        if match := re.compile(
-                r'^\*\*' + re.escape(self.user.name) + r'\*\*, the roulette is limited to \d+ uses per hour\. \*\*(\d+)\*\* min left\.\n'
-                r'Upvote Mudae to reset the timer: \*\*\$vote\*\*\. Twitter: \*\*@Mudaebot\*\*\n'
-            ).match(msg.content):
+        if match := re.match(
+                r'^\*\*' + re.escape(self.user.name) + r'\*\*, the roulette is limited to \d+ uses per hour\. \*\*(\d+)\*\* min left\.\n',
+                msg.content):
             # last hour claim
             if MIN_KAKERA_LAST_HOUR > 0 and hasattr(self, 'next_claim') and (self.next_claim - time.time()) % (3 * 3600) < 3600:
                 # check all character cards from last 42.5 seconds for kakera > MIN_KAKERA_LAST_HOUR
@@ -127,9 +135,9 @@ class automation(discord.Client):
             print('------')
             self.loop.create_task(self.delay(int(match.group(1) if match.group(1) else 0) * 3600 + int(match.group(2)) * 60 + 15, 'dailykakera'))
         # daily wait
-        if (match := re.compile(
-                r'^Next \$daily reset in \*\*(?:(\d+)h )?(\d{1,2})\*\* min\.'
-            ).match(msg.content)) and self.pause_daily.is_set():
+        if (match := re.match(
+                r'^Next \$daily reset in \*\*(?:(\d+)h )?(\d{1,2})\*\* min\.',
+                msg.content)) and self.pause_daily.is_set():
             print('------')
             print(f"[{timestamp}] PAUSING $daily FOR {match.group(1) if match.group(1) else 0} HOURS AND {match.group(2)} MINUTES")
             print('------')
@@ -143,7 +151,7 @@ class automation(discord.Client):
             self.loop.create_task(self.delay(20 * 3600, 'daily'))
 
     async def delay(self, delay, type):
-        print("stuck in delay")
+        print("delaying")
         self.delays[type] = time.time() + delay
         match type:
             case 'roll':
@@ -163,18 +171,17 @@ class automation(discord.Client):
         del(self.delays[type])
 
     async def roll(self):
-        roll_cmd = "$wa"
         while not self.is_closed():
             await self.wait_until_ready()
-            print("stuck in roll")
+            print("rolling")
             await self.pause_roll.wait()
             await asyncio.sleep(2.5)
-            await asyncio.gather(*(channel.send(roll_cmd) for channel in self.mudae_channels))
+            await self.command.__call__(self.mudae_channels[0])
             await asyncio.sleep(5)
     async def dailykakera(self):
         while not self.is_closed():
             await self.wait_until_ready()
-            print("stuck in dailykakera")
+            print("dailykakera-ing")
             await self.pause_dailykakera.wait()
             await asyncio.sleep(5)
             await asyncio.gather(*(channel.send("$donkeykong") for channel in self.mudae_channels))
@@ -189,7 +196,7 @@ class automation(discord.Client):
     async def listen_to_mudae(self):
         await self.wait_until_ready()
         while not self.is_closed():
-            print("stuck in listening")
+            print("listening to mudae")
             try:
                 await self.parse_mudae(await self.wait_for('message',timeout=10.0,
                                                      check=(lambda m: m.author.id == MUDAE and 
@@ -204,7 +211,7 @@ class automation(discord.Client):
     async def listen(self):
         await self.wait_until_ready()
         while not self.is_closed():
-            print("stuck in listening")
+            print("listening")
             try:
                 await self.parse(await self.wait_for('message',timeout=10.0,
                                                      check=(lambda m: m.author.id in VALID_USERS and 
@@ -252,6 +259,7 @@ class automation(discord.Client):
         self.all_channels = [ch for ch in (self.get_channel(cid) for cid in ALL_CHANNELS) if ch]
         if not self.mudae_channels or not self.all_channels:
             raise RuntimeError("ALL_CHANNELS OR MUDAE_CHANNELS EMPTY")
+        self.command : discord.SlashCommand = next((cmd for cmd in await self.mudae_channels[0].application_commands() if cmd.name == COMMAND), None)
 
         # start listening
         self.tasks["listen_to_mudae"] = self.loop.create_task(self.listen_to_mudae())
