@@ -30,8 +30,6 @@ MUDAE_CHANNELS
 a python list of Discord channel IDs in which the script will roll, claim, etc.
 The script will only perform Mudae-related tasks in the MUDAE_CHANNELS specified here
 PLEASE MAKE SURE THAT MUDAE_CHANNELS IS A PYTHON LIST
-
-May 11th 2025: CURRENTLY, ONLY ONE CHANNEL ID IS SUPPORTED FOR MUDAE_CHANNELS
 """
 
 MUDAE_CHANNELS = []
