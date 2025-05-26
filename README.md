@@ -5,13 +5,14 @@ Autos your Mudae rolls, character claims, kakera claims, and other tasks for you
 Please remember that self-botting violates Discord's Terms of Service, so automate at your own discretion.
 
 **FEATURES INCLUDE**:
++ automation across multiple Mudae channels!
 + **slash-rolling** to completion every hour using a command of your choice
 + claiming any characters with kakera above a prespecified minimum value
 + claiming highest kakera character rolled in the last 45 seconds after rolling to completion **in the last hour before claims reset** (this can be disabled in the config.py file)
 + claiming any kakera spawned from rolls or $mk
 + collecting $dailykakera (to completion if you have premium)
 + collecting $daily roll refreshes
-+ user monitoring of the internal states of the script through sending simple messages (like "@{replace with your username} list delays") in prespecified Discord channels
++ user monitoring of the internal states of the script through sending simple messages (like "@username list delays") in prespecified Discord channels
 + handling disconnects and reconnects efficiently and reliably
 
 **NOTES ON SCRIPT BEHAVIOR AND ASSUMPTIONS**:
@@ -25,7 +26,6 @@ The script **will NOT** crash or error if these values are different than what t
 + **NOTE**: Currently, the script only supports automation in ONE (1) channel, but support will expand to multiple channels very very soon
 
 **FEATURES IN DEVELOPMENT INCLUDE**:
-+ automation across multiple channels (need to optimize for lower-end machines)
 + further testing for corner cases
 + more ways to monitor script's internal states
 
