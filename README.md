@@ -24,7 +24,6 @@ Please remember that self-botting violates Discord's Terms of Service, so automa
 The script **will NOT** crash or error if these values are different than what they are assumed to be; the script will simply fail to claim/snipe characters protected by these settings.
 
 + does not assume that automated user account has 5 characters in $likelist (the script **will NOT** modify the automated user account's $likelist or $wishlist in any way)
-+ **NOTE**: Currently, the script only supports automation in ONE (1) channel, but support will expand to multiple channels very very soon
 
 **FEATURES IN DEVELOPMENT INCLUDE**:
 + further testing for corner cases
