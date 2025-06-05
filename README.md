@@ -26,6 +26,7 @@ The script **will NOT** crash or error if these values are different than what t
 + does not assume that automated user account has 5 characters in $likelist (the script **will NOT** modify the automated user account's $likelist or $wishlist in any way)
 
 **FEATURES IN DEVELOPMENT INCLUDE**:
++ further optimization of efficiency of character claims and other dailies
 + further testing for corner cases
 + more ways to monitor script's internal states
 
